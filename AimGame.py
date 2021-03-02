@@ -1,4 +1,5 @@
 import pygame  # pygame module
+from pygame import * # pygame modules
 import math  # Checking collisions in circle
 import random  # giving circles a random spot
 
@@ -26,13 +27,20 @@ scoreY = 0
 score = 0
 
 
-def show_score(x, y, score):
+def showScore(x, y, score):
     font = pygame.font.Font('freesansbold.ttf', 32)
     score = font.render("Score : " + str(score), True, (255, 255, 255))
     display.blit(score, (x, y))
 
 
-show_score(scoreX, scoreY, score)
+def showEndScreen(finalScore):
+    font = pygame.font.Font('freesansbold.ttf', 32) 
+    blurb = font.render("YOU LOSE :(", True, (255, 255, 255))
+    display.blit(blurb, ((width/2)-50, (height/2)-30))
+    showScore((width/2)-50, height/2, finalScore) #center and show score
+    
+
+showScore(scoreX, scoreY, score)
 
 #Title and Icon
 pygame.display.set_caption("Aim Game")
@@ -51,6 +59,7 @@ pygame.draw.circle(display, random.choice(colour),
                    (cx, cy), rad_circle)  # displays circle
 
 running = True
+lost = False
 counter = 1
 currentColour = (50, 255, 100)
 
@@ -82,7 +91,7 @@ while running:
     sqx = (x-cx)**2  # finds collision with circle
     sqy = (y - cy)**2
 
-    if math.sqrt(sqx+sqy) < rad_circle and click[0] == 1:
+    if lost==False and math.sqrt(sqx+sqy) < rad_circle and click[0] == 1:
         cx = random.randint(20, width-20)  # (left side of screen, width-20)
         cy = random.randint(20, height-20)
         rad_circle = random.randint(14, 20)  # random radius of circle
@@ -90,17 +99,21 @@ while running:
         display.fill((0,0,0))
         currentColour = random.choice(colour)
         score = score+1
-        show_score(scoreX, scoreY, score)
+        showScore(scoreX, scoreY, score)
         counter =0
     else:
         try:
             display.fill(((counter), 0, 0))
             pygame.draw.circle(display, currentColour, (cx, cy),
                             rad_circle)  # displays circle
-            show_score(scoreX, scoreY, score)
+            showScore(scoreX, scoreY, score)
         except:
-            display.fill(((255), 0, 0))
-
+            lost = True
+            
+    if lost == True:
+        display.fill(((255), 0, 0))
+        showEndScreen(score)
+        
     pygame.display.update()
 
     counter += 1
