@@ -1,2 +1,6 @@
-# aimgame-with-pygame
-Simple aim game I created using pygame
+**# aimgame-with-pygame**
+
+This is a simple aim game created using pygame.
+
+**Purpose:**
+Provide an example of how someone can use pygame.
