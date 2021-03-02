@@ -36,7 +36,7 @@ show_score(scorex,scorey, score)
 
 #Title and Icon
 pygame.display.set_caption("Aim Game")  
-icon = pygame.image.load('firstgame/target.png')
+icon = pygame.image.load('res\icon.png')
 pygame.display.set_icon(icon)
 
 #Background
