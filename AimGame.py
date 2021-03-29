@@ -126,8 +126,9 @@ while running:
         
         
         #print(currentColorR, currentColorG, currentColorB)
-        pygame.draw.circle(display, (100, 100, 100), (lastPoints[i]), 10)
+        pygame.draw.circle(display, (255, 255, 255), (lastPoints[i]), 5)
     
+    pygame.draw.circle(display, (255, 255, 0), (getMouseCoords()), 8)    
     #draw health bar
     pygame.draw.rect(display, [0,255,255], (((width/4),25),((counter/255)*((width/4)*2),25)))
     
