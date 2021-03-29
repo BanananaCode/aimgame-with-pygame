@@ -59,6 +59,13 @@ lost = False
 counter = 1
 currentColour = (50, 255, 100)
 
+
+trailLength = 25
+
+lastPoints = [(0,0)]*trailLength
+
+pygame.mouse.set_visible(False)
+
 # main loop
 while running:
 
@@ -72,6 +79,9 @@ while running:
 
     clock = pygame.time.Clock()
     clock.tick(FPS)  # Sets framerate
+    
+    #speed = 60 + score * 8
+
 
     x = pygame.mouse.get_pos()[0]  # pos left mouse button
     y = pygame.mouse.get_pos()[1]
@@ -98,6 +108,33 @@ while running:
             showScore(scoreX, scoreY, score)
         except:
             lost = True
+    
+    def getMouseCoords():
+        x,y = pygame.mouse.get_pos()
+        return (x,y)
+    
+    # Draw a solid blue circle in the center
+    
+    lastPoints.pop(0)
+    lastPoints.append(getMouseCoords())
+    
+
+    for i in range(trailLength):
+        #circleColorR, circleColorG, circleColorB
+        
+        temp = i/trailLength
+        
+        
+        #print(currentColorR, currentColorG, currentColorB)
+        pygame.draw.circle(display, (100, 100, 100), (lastPoints[i]), 10)
+    
+    #draw health bar
+    pygame.draw.rect(display, [0,255,255], (((width/4),25),((counter/255)*((width/4)*2),25)))
+    
+    #outline
+    pygame.draw.rect(display, [255,255,255], (((width/4),25),((width/4)*2,25)) , 2)
+    
+    
 
     if lost == True:
         display.fill(((255), 0, 0))
